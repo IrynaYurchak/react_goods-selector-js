@@ -36,41 +36,36 @@ export const App = () => {
       <table className="table">
         <tbody>
           {goods.map(good => {
-            let button = null;
+            const isSelected = good === selectedGood;
 
-            if (!selectedGood) {
-              button = (
-                <button
-                  data-cy="AddButton"
-                  type="button"
-                  className="button"
-                  onClick={() => setSelectedGood(good)}
-                >
-                  +
-                </button>
-              );
-            } else if (selectedGood === good) {
-              button = (
-                <button
-                  data-cy="RemoveButton"
-                  type="button"
-                  className="button is-info"
-                  onClick={() => setSelectedGood('')}
-                >
-                  Remove
-                </button>
-              );
-            }
+            const button = isSelected ? (
+              <button
+                data-cy="RemoveButton"
+                type="button"
+                className="button is-info"
+                onClick={() => setSelectedGood('')}
+              >
+                -
+              </button>
+            ) : (
+              <button
+                data-cy="AddButton"
+                type="button"
+                className="button"
+                onClick={() => setSelectedGood(good)}
+              >
+                +
+              </button>
+            );
 
             return (
               <tr
-                key={good}
                 data-cy="Good"
-                className={
-                  selectedGood === good ? 'has-background-success-light' : ''
-                }
+                key={good}
+                className={isSelected ? 'has-background-success-light' : ''}
               >
                 <td>{button}</td>
+
                 <td data-cy="GoodTitle" className="is-vcentered">
                   {good}
                 </td>
